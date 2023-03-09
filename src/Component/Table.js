@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { useContext,useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Avatar, Checkbox } from '@mui/material';
+import { Avatar, Button, Checkbox } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
 import { Utils } from '../CommanUtils/Context';
 import AlertDialog from './POPUP';
-import {Link} from "react-router-dom"
+
 
 
 export default function DataTable() {
-  const { RegisterdUser,setDeleteUserID,setDeletemultiple} = useContext(Utils)
+  const { RegisterdUser,setDeleteUserID,setDeletemultiple,delemultiple} = useContext(Utils)
   const [open, setOpen] = useState(false);
   const [userID,setUserID] = useState("")
-  
+ 
 
  const editUser = (e)=>{
   console.log(e.target.id)
@@ -23,9 +23,18 @@ export default function DataTable() {
 
 
  const selectMultiple = (e)=>{
-     setDeletemultiple((previous)=>{
+  if(e.target.checked==true){
+    setDeletemultiple((previous)=>{
       return[...previous,e.target.id]
      })
+  }
+  else{
+    const Result = delemultiple.filter((ele)=>{
+       return (ele!==e.target.id)
+    })
+    setDeletemultiple(Result)
+  }
+    
  }
 
   const columns = [
@@ -52,14 +61,14 @@ export default function DataTable() {
     { field: 'Edit', headerName: 'Edit', width: 125,
          renderCell:(params)=>
       <div onClick={editUser}>
-           <CreateIcon id={params.formattedValue} fontSize='small'sx={{marginLeft:"10px"}} />
+        <Button id={params.formattedValue}  sx={{color:"green"}}>Update</Button>
          </div>
        ,
        },
        { field: 'Delete', headerName: 'Delete', width: 125,
        renderCell:(params)=>
        <div onClick={(e)=>{setDeleteUserID(e.target.id)}}>
-         <DeleteIcon id={params.formattedValue} fontSize='small'sx={{marginLeft:"10px"}}  />
+         <Button id={params.formattedValue}  sx={{color:"red"}}>Delete</Button>
        </div>,
      },
   ];

@@ -6,26 +6,59 @@ import { Utils } from "../../CommanUtils/Context"
 import axios from "axios"
 import ControlledTooltips from "../../Component/Tooltip"
 import { useNavigate } from "react-router-dom"
+import loginValidation from "../../CommanUtils/loginValidation"
+import useDecode from "../../CommanUtils/jwtdecode"
 
 const Home = ()=>{
-
+useDecode()
 const { setRegisterduser,DeleteUSerID,reRenderUser, setRerenderUser} = useContext(Utils)
 const [logout,setLogOut] = useState(false)
 const Navigator = useNavigate()
- 
+ console.log(reRenderUser)
 
 useEffect(()=>{
+    if(reRenderUser){
     const getRegisterUser = async()=>{
            try{
-            const Result  = await axios.get("https://contact-backend-ukxi.onrender.com/getRegisterUser",)
+            const Result  = await axios.get(`${process.env.REACT_APP_BACKENDURL}/getRegisterUser`,
+            {headers:{
+                authorization:localStorage.getItem("RefreshToken")
+            }}
+            )
             setRegisterduser(Result.data.Result)
            }
            catch(error){
-            console.log(error)
+            if(error.response.status==403){
+                Navigator("/login")
+            }
            }
     }
     getRegisterUser()
+    setRerenderUser("")
+}
 },[reRenderUser])
+
+useEffect(()=>{
+    
+    const getRegisterUser = async()=>{
+           try{
+            const Result  = await axios.get(`${process.env.REACT_APP_BACKENDURL}/getRegisterUser`,
+            {headers:{
+                authorization:localStorage.getItem("RefreshToken")
+            }}
+            )
+            setRegisterduser(Result.data.Result)
+           }
+           catch(error){
+            if(error.response.status==403){
+                Navigator("/login")
+            }
+           }
+    }
+    getRegisterUser()
+   
+
+},[])
 
 
  
@@ -34,11 +67,17 @@ useEffect(()=>{
     if(DeleteUSerID){
    const deleteUser = async()=>{
         try{
-       const Result = axios.delete(`https://contact-backend-ukxi.onrender.com/deleteUser?id=${DeleteUSerID}`)
+       const Result = axios.delete(`${process.env.REACT_APP_BACKENDURL}/deleteUser?id=${DeleteUSerID}`,
+       {headers:{
+        authorization:localStorage.getItem("RefreshToken")
+        }}
+       )
        setRerenderUser(2)
         }
         catch(error){
-            console.log(error)
+            if(error.response.status==403){
+                Navigator("/login")
+            }
         }
    }
   deleteUser()
@@ -53,6 +92,10 @@ useEffect(()=>{
     }  
 },[logout])
 
+
+// setInterval(()=>{
+//  loginValidation()
+// },2000)
 
     return(
         <>

@@ -20,7 +20,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar({setLogOut}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  console.log(setLogOut)
+  
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -154,6 +154,9 @@ function ResponsiveAppBar({setLogOut}) {
                 </MenuItem>
               ))}
             </Menu>
+          </Box>
+          <Box style={{marginLeft:"20px"}}>
+           Pallavi Kate
           </Box>
         </Toolbar>
       </Container>

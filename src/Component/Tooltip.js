@@ -23,12 +23,16 @@ export default function ControlledTooltips() {
   const DelteMultipleUser = async()=>{
             try{
            if(delemultiple){
-           const Result = await axios.post("https://contact-backend-ukxi.onrender.com/deleteUser",delemultiple)
+           const Result = await axios.post(`${process.env.REACT_APP_BACKENDURL}/deleteUser`,delemultiple,{headers:{
+            authorization:localStorage.getItem("RefreshToken")
+        }})
            setRerenderUser(1)
            }
             }
             catch(error){
-              console.log(error)
+              if(error.response.status==403){
+                Navigator("/login")
+            }
             }
   }
 

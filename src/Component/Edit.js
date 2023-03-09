@@ -11,14 +11,14 @@ import { async } from "@firebase/util";
 
 
 
-const EditFormCom = ({userId})=>{
+const EditFormCom = ({userId,open})=>{
   const [userData,setUserData] = useState([])
   const [input, setInput] = useState({})
   const [inputImage,setInputImage] = useState("")
   const [uploadedImage,setUploadedImage] = useState("")
   const [verificationMessage,setVerificationMessage] = useState(false)
   const [showPassword, setShowPassword] = useState(false);
-  const {setToggle,setRerenderUser,setOpen} = useContext(Utils)
+  const {setToggle,setRerenderUser,reRenderUser} = useContext(Utils)
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   
   const handleMouseDownPassword = (event) => {
@@ -42,17 +42,20 @@ const EditFormCom = ({userId})=>{
       return {...previous,[e.target.name]:e.target.value}
     })
   }
+    console.log(reRenderUser)
 
   const handleSubmit = async()=>{
     try{
       setInput((previous)=>{
         return{...previous,profileimage:uploadedImage}
       })
-      const Result = await axios.put(`https://contact-backend-ukxi.onrender.com/UpdateUser?id=${userId}`,input)
-      if(Result){     
-        setRerenderUser(3)
-        setOpen(false)
-      }
+      const Result = await axios.put(`${process.env.REACT_APP_BACKENDURL}/UpdateUser?id=${userId}`,input,
+      {headers:{
+        authorization:localStorage.getItem("RefreshToken")
+    }},) 
+         open()
+         setRerenderUser(3)
+       
     }
     catch(error){
       console.log(error)
@@ -63,13 +66,17 @@ useEffect(()=>{
    const getUserData = async()=>{
         try{
           console.log(userId)
-        const Result = await axios.get(`https://contact-backend-ukxi.onrender.com/getRegisterUser?id=${userId}`)
+        const Result = await axios.get(`https://contact-backend-ukxi.onrender.com/getRegisterUser?id=${userId}`, {headers:{
+        authorization:localStorage.getItem("RefreshToken")
+          }})
         
         setUserData(Result.data.Result[0])
         setInput(Result.data.Result[0])
         }
         catch(error){
-          console.log(error)
+          if(error.response.status==403){
+            Navigator("/login")
+        }
         }
    }
    getUserData()
@@ -84,7 +91,7 @@ useEffect(()=>{
     <>
       <Box class="formContainer">
         <Box style={{ display: "flex",justifyContent:"center",alignItem:"center",}}>
-            <Typography class="formheading" style={{fontSize:"3rem",textAlign:"center",color:"black"}}>Update</Typography>          
+            <Typography class="formheading" style={{fontSize:"3rem",textAlign:"center",color:"black"}}>UPDATE</Typography>          
         </Box>
         <Box
           component="form"

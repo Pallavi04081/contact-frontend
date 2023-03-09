@@ -41,13 +41,10 @@ const LoginForm = ({auth})=>{
 
   useEffect(()=>{
     const RefreshToken = localStorage.getItem("RefreshToken")  
+    console.log(RefreshToken)
     if(RefreshToken){
-        Navigator("/")
-        auth(true)
-    }
-    else{
-        Navigator("/login")
-        auth(false)
+      auth(true)
+        Navigator("/")  
     }
   },[])
   
@@ -58,22 +55,23 @@ const LoginForm = ({auth})=>{
           setValidationResult({})
    
           setValidationResult(validation(input))
-          if(Object.keys(validationResult).length===0){
             console.log("hello")
           const data = new FormData()
           data.append("email",input.email)
           data.append("password",input.password)
-          const Result = await axios.post("https://contact-backend-ukxi.onrender.com/Userlogin",input)
+          const Result = await axios.post(`${process.env.REACT_APP_BACKENDURL}/Userlogin`,input)
           console.log(Result) 
           localStorage.setItem("ExpiredToken",Result.data.expeiredToken)
           localStorage.setItem("RefreshToken",Result.data.RefreshToken)
           auth(true)
           Navigator("/")
         }
-      }
         catch(error){
           const message = error.response.data.message
           setError(message)
+          setTimeout(()=>{
+           setError("")
+          },3000)
         }
   }
 

@@ -8,7 +8,7 @@ const Context = ({children})=>{
   const [DeleteUSerID,setDeleteUserID] = useState("")
   const [delemultiple,setDeletemultiple] = useState([])
   const [reRenderUser,setRerenderUser] = useState(0)
-  const [open, setOpen] = useState(false);
+  
 
 
      return(
@@ -24,8 +24,6 @@ const Context = ({children})=>{
       setDeletemultiple,
       reRenderUser,
       setRerenderUser,
-      open, 
-      setOpen
         }}>
          {children}
       </Utils.Provider>

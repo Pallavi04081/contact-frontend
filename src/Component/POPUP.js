@@ -17,8 +17,10 @@ export default function AlertDialog({open,userId,setOpen}) {
 
   const handleClose = () => {
     setOpen(false);
+    console.log("hello")
   };
 
+  
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -32,10 +34,10 @@ export default function AlertDialog({open,userId,setOpen}) {
         sx
       >
         <DialogContent>
-         <EditFormCom userId={userId}/>
+         <EditFormCom userId={userId} open={handleClose}/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} sx={{fontWeight:"bold",fontSize:"16px"}}>Close</Button>
         </DialogActions>
       </Dialog>
     </div>

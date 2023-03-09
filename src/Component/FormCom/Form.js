@@ -48,6 +48,7 @@ const FormCom = ({userId})=>{
     })
   }
 
+
   const handleSubmit = async()=>{
     try{
       setbackendError("")
@@ -57,13 +58,15 @@ const FormCom = ({userId})=>{
       })
   
       setValidationResult(validation(input))
-
       if(Object.keys(validationResult).length===0){
-      const Result = await axios.post("https://contact-backend-ukxi.onrender.com/UserRegister",input)
+      const Result = await axios.post(`${process.env.REACT_APP_BACKENDURL}/UserRegister`,input)
       if(Result){
-        setVerificationMessage(true) 
+        setVerificationMessage(true)
+        setTimeout(()=>{
+          setToggle(false)
+        },1000) 
       }
-    }
+      } 
     }
     catch(error){
       setbackendError("Someting went wrong")
@@ -74,6 +77,7 @@ const FormCom = ({userId})=>{
   setToggle(false)
  }
 
+ 
   return (
     <>
       <Box class="formContainer">
