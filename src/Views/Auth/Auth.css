@@ -1,0 +1,26 @@
+
+.contactcontainer{
+    width:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+    margin-top:-100px;
+    box-shadow:0px 0px 2px 2px gray;
+    border-radius:25px;
+    opacity:0.8;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width:1000px){
+    .contactcontainer{
+        width: 90%;
+    }
+}
+
+@media screen and (max-width:900px){
+    .contactcontainer{
+        flex-direction: column;
+        box-shadow: none;
+    }
+}

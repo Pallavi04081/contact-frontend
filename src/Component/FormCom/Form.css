@@ -1,0 +1,104 @@
+
+.formContainer{
+    box-sizing:border-box;
+    padding:25px;
+    border-radius:25px;
+    width:100%;
+}
+
+.textfield{
+    box-sizing: border-box;
+     width:100%;
+     text-align: left;
+}
+
+.btnCom{
+    width:auto;
+    height:41px;
+    border-radius:25px;
+    background:rgb(70, 156, 128);
+    color:white;
+    width: 120px;
+}
+
+.emailPhoneContainer{
+     display: flex;
+     flex-direction: row;
+     margin-top:20px
+}
+
+.phonefiled{
+    box-sizing: border-box;
+    width: 50%;
+    margin-right:25px 
+}
+
+.emailfield{
+    box-sizing: border-box;
+    width: 50%;
+    margin-left: 25px 
+}
+
+.formheading{
+    font-size:25px;
+    color:white;
+    width:97%
+}
+
+.text > :first-child{
+    width:100%;
+    text-align: left;
+}
+
+
+@media screen and (max-width:900px) {
+    .formContainer{
+        width: 70%;
+        background-color: #6D44BC;
+        color: white;
+        margin-top: -50px;
+    }
+
+
+
+    .btnCom{
+        background-color: white;
+        color: rgb(70, 156, 128);
+    }
+
+    .text > :first-child {
+        border-bottom: 1px solid white;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .formContainer{
+        width: 90%;
+        background-color: blueviolet;
+        color: white;
+    }
+
+    .emailPhoneContainer{
+        display: flex;
+        flex-direction: column;
+        margin-top:20px
+   }
+
+   .emailfield{
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 20px
+   }
+
+   .phonefiled{
+    width: 100%;
+    margin-top: 20px
+   }
+
+}
+
+@media screen and (max-width:500px){
+    .formContainer{
+        width: 100%;
+    }
+}
